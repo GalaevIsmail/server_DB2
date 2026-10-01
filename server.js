@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const User = require('./models/User')
+const Admin = require('./models/Admin')
 
 const PORT = 3000;
 
@@ -16,12 +18,21 @@ mongoose.connect("mongodb://localhost:27017/users").then(()=>{
     
 })
 
-app.post("/adduser", (req, res)=>{
+app.post("/adduser" ,async (req, res)=>{
     const {name , age} = req.body
     
-    const user = {
-        
-    }
+    const newUser = new User({name , age })
+    await newUser.save();
+
+
+})
+
+app.post("/Admin" , async  (req ,res) =>{
+    const {login , password , age ,email} = req.body
+
+    const newAdmin = new Admin({login , password , age ,email})
+    await newAdmin.save();
+    console.log(req.body);
     
 })
 
